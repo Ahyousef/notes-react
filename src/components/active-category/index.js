@@ -6,11 +6,10 @@ const activeCategory = (props) => {
   return (
     <section>
       {props.categories.categories.map((category) => {
-        console.log("from activecategory");
         if (category.name === props.categories.activeCategory) {
           return (
             <>
-              <h2> {category.name}</h2>
+              <h2 key={category.name}> {category.name}</h2>
               <p>{category.description}</p>
             </>
           );

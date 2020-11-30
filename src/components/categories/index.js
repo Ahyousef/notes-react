@@ -2,7 +2,7 @@ import React from "react";
 
 import { connect } from "react-redux";
 import { changeActiveCategory, reset } from "../../store/categories-reducer";
-import Button from "@material-ui/core/Button";
+import { Button } from "@material-ui/core";
 
 const categoriesBar = (props) => {
   return (
@@ -20,7 +20,9 @@ const categoriesBar = (props) => {
           );
         })}
       </ul>
-      <Button onClick={props.reset}>Reset</Button>
+      <Button style={{ border: "black solid 2px" }} onClick={props.reset}>
+        Reset Active category
+      </Button>
     </section>
   );
 };
