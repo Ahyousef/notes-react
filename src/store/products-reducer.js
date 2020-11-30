@@ -61,11 +61,14 @@ const initialState = {
 //Reducer
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (state = initialState, action) => {
+  let activeCategory = state.activeCategory;
+  let products = state.products;
   const { type, payload } = action;
+
   switch (type) {
     case "CHANGEACTIVE":
-      const activeCategory = payload;
-      const products = state.products;
+      activeCategory = payload;
+      products = state.products;
       // const products = state.products.map((product) => {
       //   if (product.category === activeCategory) {
       //     return { name: product.name, price: product.price, active:true };
@@ -77,6 +80,28 @@ export default (state = initialState, action) => {
       // console.log("Active products: ", products);
 
       return { activeCategory, products };
+    case "ADDPRODUCT":
+      products.map((product) => {
+        if (product.name === payload.product.name) {
+          product.inStock--;
+          return product;
+        } else {
+          return product;
+        }
+      });
+      return { activeCategory, products };
+    case "REMOVEPRODUCT":
+      console.log(payload);
+
+      products.map((product) => {
+        if (product.name === payload.product.product.name) {
+          product.inStock++;
+          return product;
+        } else {
+          return product;
+        }
+      });
+      return { activeCategory, products };
     case "RESET":
       console.log(initialState);
       return initialState;
@@ -84,7 +109,18 @@ export default (state = initialState, action) => {
       return state;
   }
 };
-
+export const reduceStock = (name) => {
+  return {
+    type: "ADDPRODUCT",
+    payload: name
+  };
+};
+export const increaseStock = (name) => {
+  return {
+    type: "REMOVEPRODUCT",
+    payload: name
+  };
+};
 export const changeActiveProducts = (name) => {
   return {
     type: "CHANGEACTIVE",

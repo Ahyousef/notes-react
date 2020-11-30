@@ -1,24 +1,33 @@
 import React from "react";
 
 import { connect } from "react-redux";
-import { changeActiveProducts, reset } from "../../store/products-reducer";
+import {
+  changeActiveProducts,
+  reset,
+  reduceStock
+} from "../../store/products-reducer";
+// import { addProductCart } from "../../store/cart-reducer";
 
 const productsList = (props) => {
-  console.log("active category:", props.products.activeCategory);
   return (
     <section>
       <ul>
         {props.products.products.map((product) => {
-          console.log(product.category);
-
-          if (product.category === props.products.activeCategory) {
-            console.log("true");
-
+          if (
+            product.category === props.products.activeCategory &&
+            product.inStock > 1
+          ) {
             return (
               <li key={product.name}>
-                {product.name}
+                Name: {product.name}
                 <br />
-                {product.category}
+                Category: {product.category}
+                <br />
+                InStock: {product.inStock}
+                <br />
+                <button onClick={() => props.reduceStock({ product })}>
+                  Add to Cart
+                </button>
                 <br />
                 <img src={product.image} alt="Porduct" width="200px" />
               </li>
@@ -33,6 +42,6 @@ const productsList = (props) => {
 const mapStateToProps = (state) => {
   return { products: state.products };
 };
-const mapDispatchToProps = { changeActiveProducts, reset };
+const mapDispatchToProps = { changeActiveProducts, reset, reduceStock };
 
 export default connect(mapStateToProps, mapDispatchToProps)(productsList);
