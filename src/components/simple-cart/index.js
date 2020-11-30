@@ -11,7 +11,7 @@ const cartList = (props) => {
   return (
     <section>
       <ul>
-        <h2>Cart</h2>
+        <h2>Cart ({props.cart.cartProducts.length})</h2>
         {props.cart.cartProducts.map((product) => {
           return (
             <li key={product.product.name}>
